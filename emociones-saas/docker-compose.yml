@@ -1,0 +1,41 @@
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: emociones_saas
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secreto}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secreto}
+    volumes: [db_data:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 10
+
+  ia-service:
+    build: ./ia-service
+    environment:
+      IA_SERVICE_KEY: ${IA_SERVICE_KEY:-cambia-esta-llave}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 15s
+      retries: 5
+
+  backend:
+    build: { context: ., dockerfile: docker/backend/Dockerfile }
+    env_file: ./backend/.env.docker
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD:-secreto}
+      IA_SERVICE_KEY: ${IA_SERVICE_KEY:-cambia-esta-llave}
+    depends_on:
+      db: { condition: service_healthy }
+      ia-service: { condition: service_started }
+    ports: ["8000:80"]
+
+  frontend:
+    build: { context: ., dockerfile: docker/frontend/Dockerfile }
+    depends_on: [backend]
+    ports: ["3000:80"]
+
+volumes:
+  db_data:

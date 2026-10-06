@@ -1,0 +1,40 @@
+# Análisis de SonarQube Cloud con cobertura de pruebas.
+#
+# Solo corre si el repositorio tiene la variable SONAR_CI_ACTIVADO = true
+# (Settings > Secrets and variables > Actions > Variables) y el secreto SONAR_TOKEN.
+# Antes hay que desactivar el "Análisis automático" del proyecto en SonarQube Cloud
+# (Administration > Analysis Method), porque no pueden convivir los dos métodos.
+name: SonarQube Cloud
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  sonar:
+    if: ${{ vars.SONAR_CI_ACTIVADO == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.3', coverage: pcov }
+      - name: Pruebas del backend con cobertura
+        working-directory: backend
+        run: |
+          composer install --no-interaction --prefer-dist
+          cp .env.example .env && php artisan key:generate
+          php artisan test --coverage-clover=coverage.xml
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Pruebas del servicio IA con cobertura
+        working-directory: ia-service
+        run: |
+          pip install -r requirements.txt pytest-cov
+          pytest -q --cov=app --cov-report=xml
+
+      - uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

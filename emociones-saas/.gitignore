@@ -1,0 +1,14 @@
+node_modules/
+vendor/
+.venv/
+dist/
+__pycache__/
+.pytest_cache/
+.env
+*.sqlite
+*.log
+.coverage
+coverage/
+htmlcov/
+frontend/cypress/screenshots/
+frontend/cypress/videos/

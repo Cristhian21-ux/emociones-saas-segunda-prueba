@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+/*
+| Atajo: permite ejecutar "php artisan serve" (o cualquier comando artisan)
+| desde la carpeta raíz del proyecto. Redirige al Laravel de la carpeta backend.
+*/
+chdir(__DIR__.'/backend');
+require __DIR__.'/backend/artisan';

@@ -1,0 +1,228 @@
+=== Backend Laravel (PHPUnit) ===
+
+   PASS  Tests\Unit\DisponibilidadTest
+  ✓ un dia laborable ofrece nueve horas sin el almuerzo                  0.45s  
+  ✓ el domingo no se atiende                                             0.02s  
+  ✓ una cita ocupa su hora                                               0.09s  
+  ✓ una cita cancelada libera la hora                                    0.03s  
+  ✓ una hora fuera del horario no esta libre                             0.02s  
+
+   PASS  Tests\Unit\EvaluacionLocalTest
+  ✓ phq9 sin sintomas es minima
+  ✓ phq9 puntaje moderado
+  ✓ phq9 item nueve activa alerta aunque el puntaje sea bajo
+  ✓ gad7 puntaje maximo es severo
+  ✓ cortes de severidad gad7
+  ✓ rechaza cantidad incorrecta de respuestas
+  ✓ rechaza valores fuera de rango
+  ✓ rechaza instrumento desconocido
+
+   PASS  Tests\Unit\IaLocalTest
+  ✓ saluda
+  ✓ responde sobre pagos sin tildes ni mayusculas
+  ✓ cambio de contrasena con enie
+  ✓ cobrar una cita no se confunde con agendar
+  ✓ crisis deriva a linea 113
+  ✓ pregunta desconocida no inventa
+  ✓ detecta tristeza
+  ✓ frase de riesgo con enie es riesgo alto
+  ✓ texto neutral
+  ✓ sufrir por amor con emoticon es tristeza
+  ✓ negacion y verbo ir no cuentan
+  ✓ conjugaciones y emoji
+
+   PASS  Tests\Unit\PlanTest
+  ✓ existen tres planes ordenados                                        0.04s  
+  ✓ solo premium incluye analisis de emociones                           0.02s  
+  ✓ precio segun ciclo                                                   0.04s  
+  ✓ plan gratuito limita a dos psicologos                                0.02s  
+
+   PASS  Tests\Feature\AuthTest
+  ✓ registrar un centro le asigna el plan gratuito                       0.10s  
+  ✓ registro rechaza correo duplicado                                    0.03s  
+  ✓ registro exige contrasena segura                                     0.02s  
+  ✓ login correcto devuelve token y perfil                               0.02s  
+  ✓ login con clave incorrecta falla y se audita                         0.02s  
+  ✓ usuario desactivado no puede iniciar sesion                          0.02s  
+  ✓ sin token la api responde 401                                        0.02s  
+  ✓ me devuelve el usuario autenticado                                   0.04s  
+  ✓ logout revoca el token                                               0.03s  
+  ✓ actualizar perfil                                                    0.05s  
+  ✓ centro suspendido no puede usar la api                               0.04s  
+
+   PASS  Tests\Feature\CitaTest
+  ✓ recepcion agenda una cita y se envia confirmacion                    0.07s  
+  ✓ se programa recordatorio 24 horas antes                              0.04s  
+  ✓ no se permite doble reserva y se ofrecen alternativas                0.04s  
+  ✓ no se agenda en fecha pasada                                         0.02s  
+  ✓ no se agenda fuera del horario de atencion                           0.03s  
+  ✓ cancelar ofrece el cupo al primero de la lista de espera             0.03s  
+  ✓ una cita atendida no se puede cancelar                               0.02s  
+  ✓ reprogramar cita a horario libre                                     0.03s  
+  ✓ psicologo solo ve sus citas                                          0.03s  
+  ✓ psicologo no puede ver cita ajena                                    0.02s  
+  ✓ disponibilidad excluye horas ocupadas                                0.03s  
+  ✓ marcar no agendada                                                   0.03s  
+  ✓ agendar desde lista de espera cierra la entrada                      0.03s  
+
+   PASS  Tests\Feature\DashboardYPlataformaTest
+  ✓ dashboard muestra metricas del centro                                0.09s  
+  ✓ auditoria registra acciones criticas                                 0.03s  
+  ✓ solo admin ve la auditoria                                           0.02s  
+  ✓ superadmin lista todos los centros                                   0.02s  
+  ✓ superadmin suspende un centro                                        0.03s  
+  ✓ admin de centro no accede a la plataforma                            0.02s  
+  ✓ metricas saas calculan ingreso recurrente                            0.02s  
+  ✓ health reporta ia no disponible sin caerse                           0.05s  
+  ✓ health con ia activa                                                 0.02s  
+
+   PASS  Tests\Feature\EvaluacionTest
+  ✓ plan gratuito no tiene evaluaciones                                  0.03s  
+  ✓ vip califica con el servicio python                                  0.03s  
+  ✓ si python no responde se califica localmente                         0.03s  
+  ✓ respuestas incompletas se rechazan                                   0.02s  
+
+   PASS  Tests\Feature\HistoriaClinicaTest
+  ✓ psicologo registra historia clinica                                  0.03s  
+  ✓ recepcion no accede a historias clinicas                             0.02s  
+  ✓ psicologo no lee historias de otro psicologo                         0.03s  
+  ✓ plan premium analiza emociones con el servicio python                0.02s  
+  ✓ si el servicio python falla la historia se guarda igual              0.03s  
+
+   PASS  Tests\Feature\IaTest
+  ✓ chatbot responde y guarda la conversacion                            0.03s  
+  ✓ chatbot responde en local si python cae                              0.03s  
+  ✓ analisis de emociones en local si python cae                         0.02s  
+  ✓ el chatbot envia la llave del servicio                               0.02s  
+  ✓ analisis de emociones requiere plan premium                          0.02s  
+  ✓ analisis de emociones en premium                                     0.02s  
+
+   PASS  Tests\Feature\ListaEsperaNotificacionTest
+  ✓ agregar paciente a lista de espera                                   0.03s  
+  ✓ no se duplica en lista de espera                                     0.02s  
+  ✓ el cupo respeta la franja preferida                                  0.03s  
+  ✓ retirar de la lista de espera                                        0.02s  
+  ✓ enviar recordatorios pendientes vencidos                             0.03s  
+  ✓ notificacion sin destino queda fallida                               0.03s  
+
+   PASS  Tests\Feature\MultiTenantTest
+  ✓ un centro no ve los pacientes de otro                                0.03s  
+  ✓ no se puede abrir un paciente de otro centro                         0.02s  
+  ✓ no se puede agendar con un psicologo de otro centro                  0.03s  
+  ✓ el mismo dni puede existir en centros distintos                      0.03s  
+  ✓ un paciente nuevo se asocia al centro del usuario                    0.02s  
+
+   PASS  Tests\Feature\PacienteTest
+  ✓ recepcion registra un paciente                                       0.03s  
+  ✓ dni debe tener ocho digitos                                          0.02s  
+  ✓ dni duplicado en el mismo centro se rechaza                          0.02s  
+  ✓ telefono debe ser celular peruano                                    0.02s  
+  ✓ buscar pacientes por apellido                                        0.02s  
+  ✓ actualizar paciente                                                  0.03s  
+  ✓ eliminar paciente es borrado logico                                  0.02s  
+  ✓ psicologo no puede registrar pacientes                               0.02s  
+  ✓ plan gratuito limita el numero de pacientes                          0.05s  
+
+   PASS  Tests\Feature\PagoTest
+  ✓ cobrar confirma la cita                                              0.05s  
+  ✓ no se cobra dos veces                                                0.03s  
+  ✓ comprobante repetido se rechaza                                      0.03s  
+  ✓ monto debe ser positivo                                              0.03s  
+  ✓ no se atiende una cita sin pago                                      0.03s  
+  ✓ psicologo atiende una cita pagada                                    0.03s  
+
+   PASS  Tests\Feature\PersonalTest
+  ✓ admin agrega un psicologo                                            0.03s  
+  ✓ psicologo requiere especialidad                                      0.02s  
+  ✓ recepcion no puede agregar personal                                  0.02s  
+  ✓ limite de psicologos del plan gratuito                               0.02s  
+  ✓ desactivar personal revoca sus tokens                                0.03s  
+  ✓ admin no se desactiva a si mismo                                     0.02s  
+  ✓ no se gestiona personal de otro centro                               0.02s  
+
+   PASS  Tests\Feature\SuscripcionTest
+  ✓ los planes son publicos                                              0.02s  
+  ✓ admin mejora a premium anual                                         0.03s  
+  ✓ cambiar de plan cancela la suscripcion anterior                      0.03s  
+  ✓ no se baja de plan si se superan los limites                         0.03s  
+  ✓ cancelar vuelve al plan gratuito                                     0.03s  
+  ✓ consultar uso del plan                                               0.02s  
+  ✓ plan inexistente se rechaza                                          0.02s  
+
+  Tests:    117 passed (251 assertions)
+  Duration: 3.57s
+
+
+=== Servicio IA Python (pytest) ===
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.4, pluggy-1.6.0 -- ia-service/.venv/bin/python
+rootdir: ia-service
+plugins: anyio-4.15.1, cov-7.1.0
+collecting ... collected 34 items
+
+tests/test_api.py::test_health_es_publico PASSED                         [  2%]
+tests/test_api.py::test_rechaza_peticion_sin_llave PASSED                [  5%]
+tests/test_api.py::test_analizar_emociones_por_api PASSED                [  8%]
+tests/test_api.py::test_texto_muy_corto_es_422 PASSED                    [ 11%]
+tests/test_api.py::test_puntuar_por_api PASSED                           [ 14%]
+tests/test_api.py::test_puntuar_invalido_es_422 PASSED                   [ 17%]
+tests/test_api.py::test_chatbot_por_api PASSED                           [ 20%]
+tests/test_chatbot.py::test_responde_como_agendar PASSED                 [ 23%]
+tests/test_chatbot.py::test_responde_sobre_planes PASSED                 [ 26%]
+tests/test_chatbot.py::test_crisis_deriva_a_linea_de_ayuda PASSED        [ 29%]
+tests/test_chatbot.py::test_pregunta_desconocida_no_inventa PASSED       [ 32%]
+tests/test_emociones.py::test_detecta_tristeza PASSED                    [ 35%]
+tests/test_emociones.py::test_detecta_ansiedad_sin_tildes_ni_mayusculas PASSED [ 38%]
+tests/test_emociones.py::test_texto_neutral PASSED                       [ 41%]
+tests/test_emociones.py::test_frase_de_riesgo_es_riesgo_alto PASSED      [ 44%]
+tests/test_emociones.py::test_alegria_es_riesgo_bajo PASSED              [ 47%]
+tests/test_emociones.py::test_puntajes_suman_uno PASSED                  [ 50%]
+tests/test_emociones.py::test_normalizar_quita_tildes PASSED             [ 52%]
+tests/test_emociones.py::test_sufrir_por_amor_es_tristeza PASSED         [ 55%]
+tests/test_emociones.py::test_emoticon_triste_cuenta PASSED              [ 58%]
+tests/test_emociones.py::test_negacion_no_cuenta PASSED                  [ 61%]
+tests/test_emociones.py::test_conjugaciones_por_raiz PASSED              [ 64%]
+tests/test_emociones.py::test_ira_el_verbo_no_es_ira_la_emocion PASSED   [ 67%]
+tests/test_emociones.py::test_frase_de_riesgo_sola_no_es_neutral PASSED  [ 70%]
+tests/test_evaluaciones.py::test_cortes_phq9[0-minima] PASSED            [ 73%]
+tests/test_evaluaciones.py::test_cortes_phq9[5-leve] PASSED              [ 76%]
+tests/test_evaluaciones.py::test_cortes_phq9[10-moderada] PASSED         [ 79%]
+tests/test_evaluaciones.py::test_cortes_phq9[15-moderadamente_severa] PASSED [ 82%]
+tests/test_evaluaciones.py::test_cortes_phq9[20-severa] PASSED           [ 85%]
+tests/test_evaluaciones.py::test_gad7_leve PASSED                        [ 88%]
+tests/test_evaluaciones.py::test_phq9_item9_genera_alerta PASSED         [ 91%]
+tests/test_evaluaciones.py::test_rechaza_numero_de_respuestas PASSED     [ 94%]
+tests/test_evaluaciones.py::test_rechaza_valor_fuera_de_rango PASSED     [ 97%]
+tests/test_evaluaciones.py::test_rechaza_instrumento_desconocido PASSED  [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.11/site-packages/starlette/testclient.py:40
+  ia-service/.venv/lib/python3.11/site-packages/starlette/testclient.py:40: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 34 passed, 1 warning in 0.54s =========================
+
+=== Frontend React (Vitest) ===
+
+ RUN  v2.1.9 /home/claude/emociones-saas/frontend
+
+ ✓ src/__tests__/validaciones.test.js (8 tests) 7ms
+stderr | src/__tests__/Login.test.jsx > Login con escena 3D > muestra el formulario y el fondo 3D (con respaldo sin WebGL)
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/__tests__/componentes.test.jsx (7 tests) 279ms
+stderr | src/__tests__/componentes.test.jsx > componentes > RutaPrivada redirige al login sin sesión
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/__tests__/menu.test.js (5 tests) 8ms
+ ✓ src/__tests__/Login.test.jsx (5 tests) 568ms
+ ✓ src/__tests__/escena3d.test.js (4 tests) 12ms
+
+ Test Files  5 passed (5)
+      Tests  29 passed (29)
+   Start at  22:19:06
+   Duration  3.77s (transform 559ms, setup 603ms, collect 1.53s, tests 873ms, environment 4.76s, prepare 657ms)
+
